@@ -7,6 +7,7 @@ env:
 extends: [
   'htmlacademy/es6',
   'plugin:react/recommended',
+  'plugin:@typescript-eslint/recommended',
   ]
 
 parserOptions:
@@ -23,3 +24,8 @@ settings:
 
 parser: '@typescript-eslint/parser'
 
+rules: {
+  '@typescript-eslint/no-empty-function': 'off',
+  '@typescript-eslint/explicit-function-return-type': 'off',
+  'react/prop-types': 'off'
+ }
