@@ -1,5 +1,5 @@
 import React from 'react';
-import Enzyme, {shallow} from 'enzyme';
+import Enzyme, {mount} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import Main from './main';
 
@@ -7,25 +7,50 @@ Enzyme.configure({
   adapter: new Adapter(),
 });
 
-it(`Should title link be pressed`, () => {
-  const onTitleClick = jest.fn();
+it(`Should img or title link be pressed`, () => {
+  const onCardClick = jest.fn();
+  const movies = [
+    {
+      id: `123`,
+      title: `Some Film`,
+      poster: `some-poster.jpg`,
+      genre: `comedy`,
+      year: 2000,
+      director: `Some Director`,
+      cast: [`Actor One`, `Actor Two`],
+      cover: `some-bg-poster.jpg`,
+      description: `Damn good film`,
+      rating: 10.0,
+      reviewsCount: 100,
+    },
+    {
+      id: `456`,
+      title: `Another Film`,
+      poster: `another-poster.jpg`,
+      genre: `drama`,
+      year: 2000,
+      director: `Another Director`,
+      cast: [`Actor One`, `Actor Two`],
+      cover: `another-bg-poster.jpg`,
+      description: `Awful film`,
+      rating: 2.0,
+      reviewsCount: 50,
+    },
+  ];
 
-  const main = shallow(
+  const main = mount(
       <Main
-        currentMovie={{
-          title: `The Grand Budapest Hotel`,
-          genre: `Drama`,
-          year: 2014
-        }}
-        onTitleClick={onTitleClick}
+        movies={movies}
+        currentMovie={movies[0]}
+        onCardClick={onCardClick}
       />
   );
 
-  const titleLinks = main.find(`a.small-movie-card__link`);
+  const titleLink = main.find(`a.small-movie-card__link`).first();
+  const imageLink = main.find(`div.small-movie-card__image`).first();
 
-  titleLinks.forEach((link) => {
-    link.simulate(`click`);
-  });
+  titleLink.simulate(`click`);
+  imageLink.simulate(`click`);
 
-  expect(onTitleClick.mock.calls.length).toBe(20);
+  expect(onCardClick.mock.calls.length).toBe(2);
 });
