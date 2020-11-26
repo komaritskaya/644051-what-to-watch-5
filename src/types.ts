@@ -1,3 +1,13 @@
+import moment from 'moment';
+
+export interface Comment {
+  id: string;
+  user: string;
+  date: Date;
+  text: string;
+  rate: number;
+}
+
 export interface Movie {
   id: string;
   title: string;
@@ -8,7 +18,7 @@ export interface Movie {
   director: string;
   cast: string[];
   description: string;
-  rating: number;
-  reviewsCount: number;
   trailer: string;
+  duration: moment.Duration;
+  comments: Comment[];
 }
